@@ -1,21 +1,20 @@
-# Define variables
-ENV_DIR = venv
-PYTHON = $(ENV_DIR)/bin/python
-PIP = $(ENV_DIR)/bin/pip
+.PHONY: setup run clean
 
-# Default target
-all: setup
-
-# Create a virtual environment and install dependencies
+# Target to install dependencies without using a virtual environment
 setup:
-	python3 -m venv $(ENV_DIR)
-	$(PIP) install --upgrade pip
-	$(PIP) install -r requirements.txt
+	@echo "Installing dependencies..."
+	python3 -m pip install --user --upgrade pip
+	python3 -m pip install --user -r requirements.txt
+	@echo "Dependencies installed."
 
-# Run the script
+# Target to run the Python script directly
 run: setup
-	$(PYTHON) calculate_matrix.py
+	@echo "Running the script..."
+	python3 calculate_matrix.py
 
-# Clean up environment
+# Clean temporary files (e.g., __pycache__)
 clean:
-	rm -rf $(ENV_DIR)
+	@echo "Cleaning up temporary files..."
+	rm -rf __pycache__
+	rm -rf *.pyc
+	@echo "Cleanup completed."
